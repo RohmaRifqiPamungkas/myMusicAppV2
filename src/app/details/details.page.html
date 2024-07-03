@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Details
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="shareTrack()">
+        <ion-icon slot="icon-only" name="share"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content *ngIf="track">
+  <ion-card>
+    <ion-img [src]="track.album.images[0]?.url"></ion-img>
+    <ion-card-header>
+      <ion-card-title>{{ track.name }}</ion-card-title>
+      <ion-card-subtitle>{{ track.artists[0].name }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Album: {{ track.album.name }}</p>
+      <p>Release Date: {{ track.album.release_date }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item lines="none">
+    <ion-range min="0" [max]="duration" [(ngModel)]="currentTime" (ionChange)="onRangeChange($event)">
+      <ion-label slot="start">{{ formatTime(currentTime) }}</ion-label>
+      <ion-label slot="end">{{ formatTime(duration) }}</ion-label>
+    </ion-range>
+  </ion-item>
+
+  <ion-grid>
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="auto">
+        <ion-button fill="clear" (click)="playPause()">
+          <ion-icon [name]="isPlaying ? 'pause' : 'play'"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-button expand="block" (click)="showLyrics()">Show Lyrics</ion-button>
+
+  <ion-text *ngIf="lyrics">
+    <h3>Lyrics</h3>
+    <p>{{ lyrics }}</p>
+  </ion-text>
+</ion-content>
+
+<ion-content *ngIf="!track">
+  <ion-spinner></ion-spinner>
+  <!-- atau pesan loading lainnya -->
+</ion-content>

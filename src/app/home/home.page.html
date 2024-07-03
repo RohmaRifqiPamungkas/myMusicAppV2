@@ -1,20 +1,58 @@
-<ion-header [translucent]="true">
+<!-- home.page.html -->
+
+<ion-header>
   <ion-toolbar>
     <ion-title>
-      Blank
+      Home
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <!-- Daftar Album -->
+  <ion-list>
+    <ion-item *ngFor="let album of newReleases" [routerLink]="['/details', album.id]">
+      <ion-thumbnail slot="start">
+        <img [src]="album.images[0]?.url" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ album.name }}</h2>
+        <p>{{ album.artists[0].name }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <!-- Daftar Playlist Favorit -->
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        Favorites
+      </ion-label>
+      <ion-button fill="clear" (click)="createPlaylist()">
+        Create Playlist
+      </ion-button>
+    </ion-list-header>
+    <ion-item *ngFor="let track of favoriteTracks">
+      <ion-thumbnail slot="start">
+        <img [src]="track.album.images[0]?.url" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ track.name }}</h2>
+        <p>{{ track.artists[0].name }}</p>
+      </ion-label>
+      <ion-button fill="clear" slot="end" (click)="unFavorite(track.id)">
+        <ion-icon name="heart-dislike-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" slot="end" (click)="playTrack(track)">
+        <ion-icon [name]="currentTrack === track ? 'pause' : 'play'"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <!-- FAB untuk navigasi ke halaman pencarian -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/search']">
+      <ion-icon name="search"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

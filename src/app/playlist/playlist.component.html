@@ -1,0 +1,22 @@
+<!-- playlist.component.html -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Playlists
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let playlist of playlists">
+      <ion-label>{{ playlist.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-item>
+    <ion-input placeholder="New Playlist Name" [(ngModel)]="newPlaylistName"></ion-input>
+    <ion-button (click)="createPlaylist()">Create Playlist</ion-button>
+  </ion-item>
+</ion-content>

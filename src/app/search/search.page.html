@@ -1,0 +1,30 @@
+<!-- search.page.html -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Search
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar [(ngModel)]="query" (ionInput)="search()"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let track of searchResults" [routerLink]="['/details', track.id]">
+      <ion-thumbnail slot="start">
+        <img [src]="track.album.images[0]?.url" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ track.name }}</h2>
+        <p>{{ track.artists[0].name }}</p>
+      </ion-label>
+      <ion-icon slot="end" name="heart-outline" *ngIf="!isFavorite(track.id)" (click)="addFavorite(track)"></ion-icon>
+      <ion-icon slot="end" name="heart" *ngIf="isFavorite(track.id)" (click)="removeFavorite(track.id)"></ion-icon>
+      <ion-icon slot="end" name="add-circle-outline" (click)="addToPlaylist(track)"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>
